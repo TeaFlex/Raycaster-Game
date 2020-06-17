@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1592418567 source:d:\perso\c\raycastgame\main.c
+	<windows.h>
+	<gl/gl.h>
+	<GL/glut.h>
+	<GL/glu.h>
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
