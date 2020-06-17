@@ -71,6 +71,7 @@ void drawRays3D()
     float rx, ry, ra, xo, yo;
     float disH=1000000, hx = playerX, hy = playerY;
     float disV=1000000, vx = playerX, vy = playerY;
+    float disT;
     ra=playera-30*DEG; if(ra<0){ra += 2*PI;} if(ra>2*PI){ ra-=2*PI;}
 
     for(r=0; r<60; r++)
@@ -101,12 +102,19 @@ void drawRays3D()
             else{ rx+=xo; ry+=yo; dof++; }//ligne suivante
         }
 
-        glColor3f(0,1,0);
+        if(disH > disV){rx=vx; ry=vy; disT=disV; glColor3f(0,0.5,0);}
+        if(disH < disV){rx=hx; ry=hy; disT=disH; glColor3f(0,0.3,0);}
         glLineWidth(1);
         glBegin(GL_LINES);
         glVertex2i(playerX, playerY);
-        if(disH > disV) {glVertex2i(vx, vy);} else {glVertex2i(hx, hy);}
+        glVertex2i(rx, ry);
         glEnd();
+
+        //Gestion des murs 3D
+        float ca=playera-ra; if(ca<0){ca+=PI*2;} if(ca>2*PI){ca-=2*PI;} disT=disT*cos(ca); //correction effet eyefish
+        float lineH = (mapS*320)/disT; if(lineH>320) {lineH=320;}//heuteur des lignes
+        float lineO = 160-lineH/2;//décalage des lignes
+        glLineWidth(8); glBegin(GL_LINES); glVertex2i(r*8+530,lineO); glVertex2i(r*8+530, lineH+lineO); glEnd();
 
         ra+=DEG;
         if(ra<0){ra += 2*PI;} if(ra>2*PI){ ra-=2*PI;}

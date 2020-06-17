@@ -8,3 +8,12 @@
 	<stdlib.h>
 	<math.h>
 
+1592430815 source:d:\perso\c\raycastgamegit\raycaster game\main.c
+	<windows.h>
+	<gl/gl.h>
+	<GL/glut.h>
+	<GL/glu.h>
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
