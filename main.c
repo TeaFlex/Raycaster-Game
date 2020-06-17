@@ -16,14 +16,25 @@ int mapX = 8, mapY = 8, mapS = 64;
 int map[] =
 {
   1,1,1,1,1,1,1,1,
-  1,0,0,0,0,0,0,1,
-  1,1,1,0,0,0,0,1,
+  1,0,1,0,0,0,0,1,
   1,0,0,0,0,1,0,1,
-  1,0,1,0,0,0,0,1,
-  1,0,1,0,0,0,0,1,
   1,0,0,0,1,0,0,1,
+  1,0,0,1,0,0,0,1,
+  1,0,1,0,0,0,0,1,
+  1,0,0,0,0,0,0,1,
   1,1,1,1,1,1,1,1,
 };
+
+void randomizeMap()
+{
+    int i;
+    for(i = 0; i<mapS; i++)
+    {
+        srand(time(0));
+        map[i] = (map[i]==1)? 1 : (rand() % (1 - 0 + 1) + 0);
+        printf("%d", (rand() % (2 - 0 + 1) + 0));
+    }
+}
 
 void drawMap2D()
 {
@@ -109,10 +120,11 @@ void drawRays3D()
         glVertex2i(playerX, playerY);
         glVertex2i(rx, ry);
         glEnd();
+        if(rx-playerX == 0 || ry-playerY == 0) printf("%d %d",rx, ry);
 
         //Gestion des murs 3D
         float ca=playera-ra; if(ca<0){ca+=PI*2;} if(ca>2*PI){ca-=2*PI;} disT=disT*cos(ca); //correction effet eyefish
-        float lineH = (mapS*320)/disT; if(lineH>320) {lineH=320;}//heuteur des lignes
+        float lineH = (mapS*320)/disT; if(lineH>320) {lineH=320;}//hauteur des lignes
         float lineO = 160-lineH/2;//décalage des lignes
         glLineWidth(8); glBegin(GL_LINES); glVertex2i(r*8+530,lineO); glVertex2i(r*8+530, lineH+lineO); glEnd();
 
@@ -160,7 +172,7 @@ void buttons(unsigned char key, int x, int y)
 
 void init()
 {
-    glClearColor(0.4,0.4,0.4,0);
+    glClearColor(0,0,0,0);
     gluOrtho2D(0,1024,512,0);
     playerX = 200;
     playerY = 200;
@@ -175,6 +187,7 @@ void main(int argc, char* argv[])
    glutInitWindowSize(1024, 512);
    glutCreateWindow("RayCastGame");
    init();
+   //randomizeMap();
    glutDisplayFunc(display);
    glutKeyboardFunc(buttons);
    glutMainLoop();
